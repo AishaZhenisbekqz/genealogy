@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қыпшақ тарихы</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Кері қайту батырмасы */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(45deg, #8B4513, #CD853F);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+            background: linear-gradient(45deg, #A0522D, #DEB887);
+        }
+
+        /* Бірінші секция - Ру таңбасы мен ұраны */
+        .section-symbol {
+            background: linear-gradient(135deg, #2c1810 0%, #8B4513 50%, #D2691E 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-symbol::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,215,0,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,215,0,0.08)"/><circle cx="40" cy="70" r="1" fill="rgba(255,215,0,0.06)"/><circle cx="70" cy="20" r="1.2" fill="rgba(255,215,0,0.09)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .symbol-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .symbol-left {
+            text-align: center;
+            position: relative;
+        }
+
+        .tribal-symbol {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0.05) 70%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 3px solid #FFD700;
+            animation: symbolGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes symbolGlow {
+            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3); }
+        }
+
+        
+
+        .symbol-text {
+            color: #F5DEB3;
+            font-size: 18px;
+            line-height: 1.8;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .symbol-right {
+            color: #F5DEB3;
+        }
+
+        .tribal-slogan {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .slogan-meaning {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #F5DEB3;
+            text-align: justify;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Екінші секция - Тарих мен аңыздар */
+        .section-history {
+            background: linear-gradient(45deg, #1a4730 0%, #2d5530 50%, #0f3620 100%);
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .section-history::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M50,50 Q100,20 150,50 T250,50" stroke="rgba(144,238,144,0.1)" stroke-width="2" fill="none"/><path d="M30,120 Q80,90 130,120 T230,120" stroke="rgba(144,238,144,0.08)" stroke-width="1.5" fill="none"/></svg>');
+            opacity: 0.3;
+        }
+
+        .history-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #90EE90;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .timeline {
+            display: grid;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            border-left: 5px solid #90EE90;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-date {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2d5530;
+            margin-bottom: 15px;
+        }
+
+        .timeline-content {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .legends-section {
+            background: rgba(144, 238, 144, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(144, 238, 144, 0.3);
+        }
+
+        .legend-title {
+            font-size: 2rem;
+            color: #90EE90;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .legend-text {
+            color: #F0F8FF;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            font-style: italic;
+        }
+
+        /* Үшінші секция - Қызықты фактілер */
+        .section-facts {
+            background: linear-gradient(135deg, #191970 0%, #4169E1 50%, #000080 100%);
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .section-facts::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,5 60,35 90,35 70,55 80,85 50,70 20,85 30,55 10,35 40,35" fill="rgba(173,216,230,0.1)"/></svg>') repeat;
+            background-size: 150px 150px;
+            animation: starField 30s linear infinite;
+        }
+
+        @keyframes starField {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-150px) translateY(-150px); }
+        }
+
+        .facts-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .facts-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #ADD8E6;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .fact-item {
+            background: rgba(173, 216, 230, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .fact-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .fact-item:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        .fact-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(173, 216, 230, 0.4);
+            border-color: #ADD8E6;
+        }
+
+        .fact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .fact-text {
+            color: #191970;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        /* Төртінші секция - FAQ */
+        .section-faq {
+            background: linear-gradient(45deg, #4B0082 0%, #8A2BE2 50%, #6A0DAD 100%);
+            padding: 80px 20px;
+            position: relative;
+        }
+
+        .section-faq::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="none" stroke="rgba(221,160,221,0.1)" stroke-width="2"/><circle cx="30" cy="30" r="15" fill="none" stroke="rgba(221,160,221,0.08)" stroke-width="1"/></svg>') repeat;
+            background-size: 120px 120px;
+            animation: ripple 15s ease-in-out infinite;
+        }
+
+        @keyframes ripple {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .faq-title {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #DDA0DD;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .accordion-item {
+            background: rgba(221, 160, 221, 0.95);
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(221, 160, 221, 0.3);
+        }
+
+        .accordion-header {
+            padding: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4B0082;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-header:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #4B0082;
+        }
+
+        .accordion-content.active {
+            padding: 0 25px 25px;
+            max-height: 500px;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .tribal-symbol img {
+    max-width: 300px; /* Суреттің ең үлкен ені */
+    height: auto; /* Пропорцияны сақтау */
+    display: block;
+    margin: 0 auto; /* Ортаға қою */
+}
+
+@media (max-width: 768px) {
+    .tribal-symbol img {
+        max-width: 100px; /* Планшет/телефонда кішірейту */
+    }
+}
+
+@media (max-width: 480px) {
+    .tribal-symbol img {
+        max-width: 80px; /* Кіші экранда одан да кішірек */
+    }
+}
+
+
+        /* Адаптивтілік */
+        @media (max-width: 768px) {
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .symbol-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 20px;
+            }
+
+
+            .section-title, .facts-title, .faq-title {
+                font-size: 2.2rem;
+            }
+
+            .facts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item {
+                padding: 20px;
+            }
+            
+            .legends-section {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tribal-slogan {
+                font-size: 2rem;
+            }
+            
+            .section-title, .facts-title, .faq-title {
+                font-size: 1.8rem;
+            }
+            
+            
+            .accordion-header {
+                padding: 20px;
+                font-size: 0.95rem;
+            }
+            
+            .accordion-content.active {
+                padding: 0 20px 20px;
+            }
+        }
+
+        /* Жылжымалы анимациялар */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Кері қайту батырмасы -->
+    <a href="javascript:history.back()" class="back-button">
+        ← Артқа қайту
+    </a>
+
+    <!-- Бірінші секция: Ру таңбасы мен ұраны -->
+<section class="section-symbol">
+    <div class="symbol-container">
+        <div class="symbol-left slide-in-left">
+            <div class="tribal-symbol">
+                <img src="таңба.png" alt="Қыпшақ руының таңбасы">
+            </div>
+            <div class="symbol-text">
+                <strong>Қыпшақ руының таңбасы</strong> — көне дәстүрлер мен батырлықтың символы.
+            </div>
+        </div>
+        <div class="symbol-right slide-in-right">
+            <h1 class="tribal-slogan">«Ойбас»</h1>
+<div class="slogan-meaning">
+    <p><strong>«Ойбас»</strong> – қыпшақ руының ежелден келе жатқан айбынды ұраны. 
+    Тарихшылардың дерегінше, бұл ұран ортағасырлық қыпшақ бірлестігі дәуірінде, шамамен XI–XIII ғасырларда кеңінен қолданылған. 
+    Ұран көбіне шайқас алдында сарбаздардың рухын көтеру, қарсыласқа психологиялық қысым жасау мақсатында айтылған.</p>
+
+    <p>Жазба деректерде, әсіресе Мамлюк қыпшақтарының әскери дәстүрінде ұран айту жорықтарда ерекше орын алғаны айтылады. 
+    Қазақ хандығы кезеңінде де қыпшақ рулары «Ойбас» ұранын сақтап, батырлар мен жасақтардың бірлігін нығайтқан.</p>
+
+    <p>Бүгінде «Ойбас» – қыпшақ руының тарихи мұрасы ғана емес, ата-бабаның ерлік дәстүрін ұрпақ санасында жаңғыртатын қасиетті сөз ретінде қолданылады.</p>
+</div>
+        </div>
+    </div>
+</section>
+
+    <!-- Екінші секция: Қызықты фактілер -->
+    <section class="section-facts">
+    <div class="facts-container">
+        <h2 class="facts-title fade-in">Қызықты фактілер</h2>
+        
+        <div class="facts-grid">
+            <div class="fact-item fade-in">
+                <span class="fact-icon">🏹</span>
+                <div class="fact-text">
+                    <strong>Арғы тегі – Шыңғысхан дәуірінен ертерек:</strong> Қазақ құрамындағы қыпшақ руы ежелгі қыпшақ конфедерациясының бір тармағынан тарайды, бірақ Шыңғысхан жорығынан кейін қазақ рулық жүйесіне кірді.
+                </div>
+            </div>
+
+            <div class="fact-item fade-in">
+                <span class="fact-icon">🔰</span>
+                <div class="fact-text">
+                    <strong>Ұраны мен таңбасы:</strong> Қыпшақ руының ұраны – <em>Ойбас</em>, таңбасы – «босаға таңба» ( || ). Бұл таңба малға, үй жабдығына, тіпті қару-жараққа да таңбаланған.
+                </div>
+            </div>
+
+            <div class="fact-item fade-in">
+                <span class="fact-icon">🌿</span>
+                <div class="fact-text">
+                    <strong>Руішілік бөліністер:</strong> Қазақ қыпшақтары қарақыпшақ, сарықыпшақ, торықыпшақ, құланқыпшақ сияқты бірнеше тармаққа бөлінеді.
+                </div>
+            </div>
+
+            <div class="fact-item fade-in">
+                <span class="fact-icon">⚖️</span>
+                <div class="fact-text">
+                    <strong>Жеті аталық тәртіп:</strong> Қыпшақтар жеті атадан аспай қыз алыспау дәстүрін қатаң сақтаған.
+                </div>
+            </div>
+
+            <div class="fact-item fade-in">
+                <span class="fact-icon">⚔️</span>
+                <div class="fact-text">
+                    <strong>Әскери беделі:</strong> Қазақ хандығы дәуірінде қыпшақтар батырларымен және қолбасшыларымен танылған, жоңғар соғыстарында ерекше ерлік көрсеткен.
+                </div>
+            </div>
+
+            <div class="fact-item fade-in">
+                <span class="fact-icon">📜</span>
+                <div class="fact-text">
+                    <strong>Мәдени мұра:</strong> Қыпшақ руы қазақтың көптеген жыр-дастандарында, әсіресе <em>Қобыланды батыр</em> эпосында маңызды орын алады.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Үшінші секция: FAQ -->
+    <section class="section-faq">
+        <div class="faq-container">
+            <h2 class="faq-title fade-in">Жиі қойылатын сұрақтар</h2>
+            
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Қыпшақтар қай кезде пайда болған?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Қыпшақтардың пайда болуы VI-VII ғасырларға жатады. Олар Оңтүстік Сібір мен Қазақстанның солтүстік аймақтарында қалыптасқан. Тарихшылардың пікірінше, қыпшақтар түрік тілдес халықтардың бір тармағы болып саналады.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Қыпшақ даласы қайда орналасқан?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Дешті-Қыпшақ (Қыпшақ даласы) Еділ өзенінен бастап Дунай өзеніне дейін, Кавказ тауларынан Батыс Сібірге дейінгі кең аумақты қамтыған. Бұл аумақ шамамен 2,5 миллион шаршы километрді құрайды.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Қыпшақтардың негізгі кәсібі қандай болған?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Қыпшақтардың негізгі кәсібі көшпенді мал шаруашылығы болған. Олар жылқы, қой, сиыр, түйе бағып, маусымдық көш-қон жасаған. Сонымен қатар, олар сауда, балықшылық және кәсіпкерлікпен де айналысқан.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>Қазіргі уақытта қыпшақ ұрпақтары қайда тұрады?</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p>Қазіргі уақытта қыпшақ ұрпақтары Қазақстан, Қырғызстан, Өзбекстан, Ресей, Украина және басқа елдерде тұрады. Көптеген қазақ, қырғыз, башқұрт, татар халықтарының құрамында қыпшақ тайпалары бар.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Аккордеон функциясы
+        function toggleAccordion(element) {
+            const accordionItem = element.parentElement;
+            const content = accordionItem.querySelector('.accordion-content');
+            const isActive = accordionItem.classList.contains('active');
+            
+            // Барлық аккордеондарды жабу
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.accordion-content').classList.remove('active');
+            });
+            
+            // Егер басылған аккордеон белсенді болмаса, оны ашу
+            if (!isActive) {
+                accordionItem.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+
+        // Жылжымалы анимация эффектілері
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    if (element.classList.contains('fade-in')) {
+                        element.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                    } else if (element.classList.contains('slide-in-left')) {
+                        element.style.animation = 'slideInLeft 0.8s ease-out forwards';
+                    } else if (element.classList.contains('slide-in-right')) {
+                        element.style.animation = 'slideInRight 0.8s ease-out forwards';
+                    }
+                }
+            });
+        }
+
+        // Беттің жүктелу кезінде және скролл жасау кезінде анимацияларды іске қосу
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Shimmer эффекті
+        function addShimmerEffect() {
+            const factItems = document.querySelectorAll('.fact-item');
+            
+            factItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.overflow = 'hidden';
+                });
+            });
+        }
+
+        // Бет жүктелген кезде функциялар іске қосылады
+        document.addEventListener('DOMContentLoaded', function() {
+            addShimmerEffect();
+            animateOnScroll();
+        });
+
+        // Кері қайту батырмасы функциясы
+        document.querySelector('.back-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Егер тарих жоқ болса, басты бетке бағыттау
+                window.location.href = '/';
+            }
+        });
+
+        // Жылжымалы фон анимациясы
+        function createFloatingElements() {
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const sectionTop = window.pageYOffset + rect.top;
+                const sectionHeight = rect.height;
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                
+                if (section.classList.contains('section-symbol')) {
+                    section.style.transform = `translate3d(0, ${rate}px, 0)`;
+                }
+            });
+        }
+
+        // Parallax эффекті
+        window.addEventListener('scroll', function() {
+            createFloatingElements();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жеті ата - Қыпшақ шежіресі</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #8B4513 50%, #D2691E 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header стильдері */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .site-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 0.5rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #F5DEB3;
+            font-style: italic;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 20px #FFD700; }
+            to { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 30px #FFD700, 0 0 40px #FFD700; }
+        }
+
+        /* Негізгі контейнер */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Форма стильдері */
+        .form-section {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 222, 179, 0.9));
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #8B4513;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-description {
+            text-align: center;
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: #8B4513;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #D2B48C;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .input-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+
+        /* Батырма стильдері */
+        .search-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #8B4513;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            margin-top: 1rem;
+        }
+
+        .search-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FFA500, #FFD700);
+        }
+
+        .search-button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Нәтиже бөлімі */
+        .result-section {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 222, 179, 0.9));
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #8B4513;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .ancestors-list {
+            list-style: none;
+            counter-reset: ancestor-counter;
+        }
+
+        .ancestor-item {
+            counter-increment: ancestor-counter;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+            margin-bottom: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .ancestor-item:before {
+            content: counter(ancestor-counter) ".";
+            position: absolute;
+            left: -2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #FFD700;
+            color: #8B4513;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .ancestor-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .ancestor-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #8B4513;
+            margin-left: 1rem;
+        }
+
+        /* Қате хабарламасы */
+        .error-message {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            border: 2px solid #f44336;
+            border-radius: 10px;
+            padding: 1rem;
+            color: #c62828;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 20%, 40%, 60%, 80% { transform: translateX(0); }
+            10%, 30%, 50%, 70% { transform: translateX(-5px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивтілік */
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .form-section, .result-section {
+                padding: 1.5rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Жүктелу анимациясы */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #FFD700;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: rgba(255, 215, 0, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+            background: #FFD700;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Артқа қайту батырмасы -->
+    <button class="back-button" onclick="window.history.back()" title="Артқа қайту">←</button>
+
+    <!-- Header бөлімі -->
+    <header class="header">
+        <h1 class="site-title">👥 Жеті ата</h1>
+        <p class="page-subtitle">Өзіңіздің жеті ата шежіреңізді құрыңыз және сақтаңыз</p>
+    </header>
+
+    <div class="container">
+        <!-- Форма бөлімі -->
+        <section class="form-section">
+            <h2 class="form-title">Жеті ата іздеу жүйесі</h2>
+            <p class="form-description">
+                Өзіңіз, әкеңіз және атаңыздың аттарын енгізіп, жеті атаңызды табыңыз
+            </p>
+
+            <form id="ancestorForm">
+                <div class="input-group">
+                    <label for="ownName" class="input-label">Өз атыңыз</label>
+                    <input type="text" id="ownName" class="input-field" placeholder="Мысалы: Асет, Айгүл, Нұрлан...">
+                    <div class="input-description">Өзіңіздің толық атыңызды жазыңыз</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="fatherName" class="input-label">Әкеңіздің аты</label>
+                    <input type="text" id="fatherName" class="input-field" placeholder="Мысалы: Сәкен, Мұрат, Қайрат...">
+                    <div class="input-description">Әкеңіздің толық атын жазыңыз</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="grandfatherName" class="input-label">Атаңыздың аты</label>
+                    <input type="text" id="grandfatherName" class="input-field" placeholder="Мысалы: Әбдіхалық, Төлеген, Сәтімхан...">
+                    <div class="input-description">Атаңыздың (әкеңіздің әкесінің) атын жазыңыз</div>
+                </div>
+
+                <button type="submit" class="search-button">🔍 Жеті атаны іздеу</button>
+            </form>
+
+            <!-- Жүктелу анимациясы -->
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Шежіре деректерінен іздеу жүргізіліп жатыр...</p>
+            </div>
+        </section>
+
+        <!-- Нәтиже бөлімі -->
+        <section class="result-section" id="resultSection">
+            <div id="resultContent"></div>
+        </section>
+    </div>
+
+    <script>
+        // Қыпшақ руының толық шежіре деректері (ағаш түрінде)
+const ancestorData = {
+  name: "Қарақыпшақ",
+  children: [
+    {
+      name: "Ұзын",
+      children: [
+        { name: "Алтыбас", children: [] },
+        {
+          name: "Алтыс",
+          children: [
+            {
+              name: "Бөкей",
+              children: [
+                {
+                  name: "Қаз",
+                  children: [
+                    {
+                      name: "Наурыз",
+                      children: [
+                        {
+                          name: "Елшібек",
+                          children: [
+                            { name: "Әлкей", children: [] },
+                            { name: "Малай", children: [] },
+                            { name: "Өтепберлі", children: [] },
+                            { name: "Адас", children: [] },
+                            { name: "Шуылдақ", children: [] },
+                            { name: "Аткелтір", children: [] },
+                            {
+                              name: "Еленбөрі",
+                              children: [
+                                { name: "Қыдыр", children: [] },
+                                {
+                                  name: "Базар",
+                                  children: [
+                                    {
+                                      name: "Сасық",
+                                      children: [
+                                        {
+                                          name: "Күнбас",
+                                          children: [
+                                            {
+                                              name: "Нұржан",
+                                              children: [
+                                                {
+                                                  name: "Қали",
+                                                  children: [
+                                                    {
+                                                      name: "Әскербек",
+                                                      children: [
+                                                        {
+                                                          name: "Пернебай",
+                                                          children: [
+                                                            { name: "Сүндет", children: [] },
+                                                            { name: "Дияс", children: [] },
+                                                            { name: "Иляс", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Нұрлыбай",
+                                                          children: [
+                                                            { name: "Абай", children: [] },
+                                                            { name: "Абылай", children: [] },
+                                                            { name: "Жанкелді", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Ғазиз",
+                                                          children: [
+                                                            { name: "Әли (ж.)", children: [] },
+                                                            { name: "Имран", children: [] },
+                                                            { name: "Осман", children: [] }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      name: "Әкімбек",
+                                                      children: [
+                                                        { name: "Темур", children: [] },
+                                                        { name: "Еркінбек", children: [] }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  name: "Ібіш",
+                                                  children: [
+                                                    { name: "Мақсат (ж.)", children: [] }
+                                                  ]
+                                                },
+                                                {
+                                                  name: "Нұғман",
+                                                  children: [
+                                                    {
+                                                      name: "Сайлау",
+                                                      children: [
+                                                        {
+                                                          name: "Зейнелғабден",
+                                                          children: [
+                                                            { name: "Мақсат (ж.)", children: [] },
+                                                            { name: "Мұрат", children: [
+                                                              { name: "Бекзат", children: [] }, 
+                                                              { name: "Оралбек", children: [] }
+                                                            ]},
+                                                            { name: "Бекболат", children: [] },
+                                                            { name: "Жанболат", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Жеңісбек",
+                                                          children: [
+                                                            { name: "Рамазан", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Азиз",
+                                                          children: [
+                                                            { name: "Нұрғиса", children: [] },
+                                                            { name: "Нұрғали", children: [] },
+                                                            { name: "Нұрәли", children: [] }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  name: "Әбіл",
+                                                  children: [
+                                                    {
+                                                      name: "Әбибулла",
+                                                      children: [
+                                                        {
+                                                          name: "Берік",
+                                                          children: [
+                                                            {
+                                                              name: "Ғабибулла",
+                                                              children: [
+                                                                { name: "Омар", children: [] }
+                                                              ]
+                                                            },
+                                                            { name: "Самұрат", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Әліби",
+                                                          children: [
+                                                            { name: "Нұрзат", children: [] },
+                                                            { name: "Әлихан", children: [] },
+                                                            { name: "Абдуали", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Медет",
+                                                          children: [
+                                                            { name: "Нұрсаят", children: [] },
+                                                            { name: "Ильяс", children: [] }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      name: "Серік",
+                                                      children: [
+                                                        {
+                                                          name: "Самат",
+                                                          children: [
+                                                            { name: "Сауран", children: [] },
+                                                            { name: "Қалқаман", children: [] }
+                                                          ]
+                                                        },
+                                                        { name: "Әділжан", children: [] }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              name: "Есім",
+                                              children: [
+                                                { name: "Рахмет (ж.)", children: [] }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          name: "Зормұрын",
+                                          children: [
+                                            {
+                                              name: "Тасым",
+                                              children: [
+                                                {
+                                                  name: "Әбжан",
+                                                  children: [
+                                                    { name: "Ергеш (ж.)", children: [] },
+                                                    {
+                                                      name: "Арын",
+                                                      children: [
+                                                        {
+                                                          name: "Бейсенбек",
+                                                          children: [
+                                                            {
+                                                              name: "Уалихан",
+                                                              children: [
+                                                                { name: "Айбек", children: [] },
+                                                                { name: "Айдос", children: [] },
+                                                                { name: "Айдын", children: [] }
+                                                              ]
+                                                            },
+                                                            {
+                                                              name: "Дәулет",
+                                                              children: [
+                                                                {
+                                                                  name: "Мұхтархан",
+                                                                  children: [
+                                                                    { name: "Мансұр", children: [] }
+                                                                  ]
+                                                                },
+                                                                { name: "Бейбарыс", children: [] }
+                                                              ]
+                                                            },
+                                                            {
+                                                              name: "Ғани",
+                                                              children: [
+                                                                { name: "Азамат", children: [] },
+                                                                { name: "Абдулла", children: [] }
+                                                              ]
+                                                            },
+                                                            {
+                                                              name: "Ғалым",
+                                                              children: [
+                                                                { name: "Алисұлтан", children: [] },
+                                                                { name: "Бексұлтан", children: [] },
+                                                                { name: "Аңсар", children: [] }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Дүйсенбек",
+                                                          children: [
+                                                            { name: "Бауыржан", children: [] },
+                                                            { name: "Ермахан", children: [] }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Нұртаза",
+                                                          children: [
+                                                            {
+                                                              name: "Руслан",
+                                                              children: [
+                                                                { name: "Омар", children: [] },
+                                                                { name: "Әнуар", children: [] }
+                                                              ]
+                                                            },
+                                                            {
+                                                              name: "Ержан",
+                                                              children: [
+                                                                { name: "Имран", children: [] },
+                                                                { name: "Хамза", children: [] },
+                                                                { name: "Осман", children: [] }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          name: "Мейрамбек",
+                                                          children: [
+                                                            {
+                                                              name: "Бақытжан",
+                                                              children: [
+                                                                { name: "Даниял", children: [] },
+                                                                { name: "Рамазан", children: [] }
+                                                              ]
+                                                            },
+                                                            {
+                                                              name: "Жүсіп",
+                                                              children: [
+                                                                { name: "Данияр", children: [] },
+                                                                { name: "Алдияр", children: [] },
+                                                                { name: "Алихан", children: [] },
+                                                                { name: "Абдурахман", children: [] }
+                                                              ]
+                                                            },
+                                                            {
+                                                              name: "Нұрсұлтан",
+                                                              children: [
+                                                                { name: "Алинұр", children: [] },
+                                                                { name: "Абубакир", children: [] }
+                                                              ]
+                                                            },
+                                                            { name: "Бекзат", children: [] }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            { name: "Шөменбай", children: [{ name: "Сағындық (ж.)", children: [] }] }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      name: "Сомболат",
+                                      children: [
+                                        {
+                                          name: "Қожаахмет",
+                                          children: [
+                                            {
+                                              name: "Жолкен",
+                                              children: [
+                                                { name: "Бақыт Ж.", children: [] },
+                                                {
+                                                  name: "Серік",
+                                                  children: [
+                                                    {
+                                                      name: "Нұрлан",
+                                                      children: [
+                                                        { name: "Әліби", children: [] },
+                                                        { name: "Жаниіс", children: [] }
+                                                      ]
+                                                    },
+                                                    {
+                                                      name: "Ерлан",
+                                                      children: [
+                                                        { name: "Ерсұлтан", children: [] },
+                                                        { name: "Бақберген", children: [] },
+                                                        { name: "Ердәулет", children: [] },
+                                                        { name: "Заңғар", children: [] }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          name: "Бекет",
+                                          children: [
+                                            {
+                                              name: "Жұмкен",
+                                              children: [
+                                                { name: "Болат", children: [] },
+                                                { name: "Сайлау", children: [] },
+                                                {
+                                                  name: "Берік",
+                                                  children: [
+                                                    {
+                                                      name: "Жалғас",
+                                                      children: [
+                                                        { name: "Жасұлан", children: [] }
+                                                      ]
+                                                    },
+                                                    {
+                                                      name: "Талғат",
+                                                      children: [
+                                                        { name: "Әлихан", children: [] }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      name: "Тонболат",
+                                      children: [{ name: "Қыз балалар", children: [] }]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        { name: "Жолдыбек", children: [] }
+                      ]
+                    }
+                  ]
+                },
+                { name: "Кедел", children: [] },
+                { name: "Кенжебай", children: [] }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { name: "Торы", children: [] },
+    { name: "Бұлтың", children: [] },
+    { name: "Көлденең", children: [] },
+    { name: "Қарабалақ", children: [] }
+  ]
+};
+
+        // Бір атауға сәйкес келетін барлық түйіндерді табу
+function findNodesByName(node, targetName, matches = []) {
+    if (node.name.toLowerCase() === targetName.toLowerCase()) {
+        matches.push(node);
+    }
+    for (let child of node.children) {
+        findNodesByName(child, targetName, matches);
+    }
+    return matches;
+}
+
+// Атаға дейінгі барлық жолдарды табу
+function findAllAncestorPaths(node, targetName, currentPath = [], allPaths = []) {
+    const newPath = [...currentPath, node.name];
+    if (node.name.toLowerCase() === targetName.toLowerCase()) {
+        allPaths.push(newPath);
+    }
+    for (let child of node.children) {
+        findAllAncestorPaths(child, targetName, newPath, allPaths);
+    }
+    return allPaths;
+}
+
+// Әке мен атаны тексеру (бірдей ат болса да шатастырмайды)
+function checkFatherAndGrandfather(fatherName, grandfatherName) {
+    const grandfatherPaths = findAllAncestorPaths(ancestorData, grandfatherName.trim());
+    if (grandfatherPaths.length === 0) {
+        return { success: false, error: 'GRANDFATHER_NOT_FOUND' };
+    }
+
+    const grandfatherNodes = findNodesByName(ancestorData, grandfatherName.trim());
+    for (let i = 0; i < grandfatherNodes.length; i++) {
+        const node = grandfatherNodes[i];
+        const fatherExists = node.children.some(child =>
+            child.name.toLowerCase() === fatherName.trim().toLowerCase()
+        );
+        if (fatherExists) {
+            return { success: true, path: grandfatherPaths[i] };
+        }
+    }
+
+    return { success: false, error: 'FATHER_NOT_MATCH' };
+}
+
+// Жеті атаны есептеу функциясы
+function calculateSevenAncestors(ownName, fatherName, grandfatherName) {
+    const checkResult = checkFatherAndGrandfather(fatherName, grandfatherName);
+
+    if (!checkResult.success) {
+        return { success: false, error: checkResult.error };
+    }
+
+    const sevenAncestors = [ownName.trim(), fatherName.trim(), grandfatherName.trim()];
+    const upperAncestors = checkResult.path.slice(0, -1).reverse().slice(0, 4);
+    sevenAncestors.push(...upperAncestors);
+
+    return { success: true, ancestors: sevenAncestors };
+}
+
+// Қате хабарламасын көрсету
+function showError(message) {
+    const existingError = document.querySelector('.error-message');
+    if (existingError) existingError.remove();
+
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    errorDiv.textContent = message;
+
+    const form = document.getElementById('ancestorForm');
+    form.insertBefore(errorDiv, form.firstChild);
+
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
+}
+
+// Нәтижені көрсету
+function displayResult(ownName, ancestors) {
+    const resultSection = document.getElementById('resultSection');
+    const resultContent = document.getElementById('resultContent');
+
+    let html = `<h3 class="result-title">Құрметті, ${ownName}! Сіздің жеті атаңыз келесідей:</h3><ol class="ancestors-list">`;
+    ancestors.forEach((ancestor, index) => {
+        const generation = [
+            'Бала', 'Әке', 'Ата', 'Арғы ата', 'Баба', 'Түп ата', 'Тек ата'
+        ][index] || `${index + 1}-буын`;
+
+        html += `<li class="ancestor-item"><div class="ancestor-name">${ancestor} (${generation})</div></li>`;
+    });
+    html += '</ol>';
+
+    resultContent.innerHTML = html;
+    resultSection.style.display = 'block';
+    resultSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Форма оқиғасы
+document.getElementById('ancestorForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const ownName = document.getElementById('ownName').value.trim();
+    const fatherName = document.getElementById('fatherName').value.trim();
+    const grandfatherName = document.getElementById('grandfatherName').value.trim();
+
+    if (!ownName || !fatherName || !grandfatherName) {
+        showError('⚠️ Барлық өрістерді толтырыңыз!');
+        return;
+    }
+
+    const loading = document.getElementById('loading');
+    const resultSection = document.getElementById('resultSection');
+
+    loading.style.display = 'block';
+    resultSection.style.display = 'none';
+
+    setTimeout(() => {
+        loading.style.display = 'none';
+
+        const result = calculateSevenAncestors(ownName, fatherName, grandfatherName);
+
+        if (!result.success) {
+            let errorMessage = '';
+            switch (result.error) {
+                case 'GRANDFATHER_NOT_FOUND':
+                    errorMessage = `❌ Кешіріңіз, "${grandfatherName}" деген атасы біздің шежіре деректерінде табылмады.`;
+                    break;
+                case 'FATHER_NOT_MATCH':
+                    errorMessage = `❌ Кешіріңіз, "${fatherName}" есімді әке "${grandfatherName}" атасының баласы емес.`;
+                    break;
+                default:
+                    errorMessage = '❌ Деректерді өңдеу кезінде қате орын алды.';
+            }
+            showError(errorMessage);
+            return;
+        }
+
+        if (result.ancestors.length < 7) {
+            showError('⚠️ Жеті атаны толық анықтау үшін мәлімет жеткіліксіз.');
+            return;
+        }
+
+        displayResult(ownName, result.ancestors.slice(0, 7));
+    }, 1500);
+});
+
+// Енгізу өрістерінің анимациясы
+document.querySelectorAll('.input-field').forEach(field => {
+    field.addEventListener('focus', function () {
+        this.parentElement.style.transform = 'translateY(-2px)';
+    });
+    field.addEventListener('blur', function () {
+        this.parentElement.style.transform = 'translateY(0)';
+    });
+});
+
+// ESC пернесімен жабу
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        const resultSection = document.getElementById('resultSection');
+        if (resultSection.style.display !== 'none') {
+            resultSection.style.display = 'none';
+        }
+    }
+});
+
+// Бет жүктелгенде анимация
+document.addEventListener('DOMContentLoaded', function () {
+    const formSection = document.querySelector('.form-section');
+    formSection.style.opacity = '0';
+    formSection.style.transform = 'translateY(30px)';
+
+    setTimeout(() => {
+        formSection.style.transition = 'all 0.8s ease-out';
+        formSection.style.opacity = '1';
+        formSection.style.transform = 'translateY(0)';
+    }, 100);
+});
+    </script>
+</body>
+</html>

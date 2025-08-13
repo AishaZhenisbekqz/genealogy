@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қыпшақ шежіресі</title>
+    <style>
+        /* Негізгі стильдер және қрип импорты */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #8B4513 50%, #D2691E 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header стильдері */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .site-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+            margin-bottom: 0.5rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .site-motto {
+            font-size: 1.3rem;
+            color: #F5DEB3;
+            font-style: italic;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Жылтыр анимациясы */
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 20px #FFD700; }
+            to { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8), 0 0 30px #FFD700, 0 0 40px #FFD700; }
+        }
+
+        /* Фон суретінің контейнері */
+        .hero-section {
+            position: relative;
+            min-height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%2387CEEB;stop-opacity:1" /><stop offset="100%" style="stop-color:%23F0E68C;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23sky)"/><path d="M0,400 Q300,350 600,400 T1200,380 L1200,600 L0,600 Z" fill="%23228B22"/><circle cx="200" cy="150" r="40" fill="%23FFD700" opacity="0.8"/><path d="M100,500 Q200,480 300,500 T500,490" stroke="%23654321" stroke-width="3" fill="none"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Карточкалар контейнері */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            max-width: 1000px;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        /* Карточка стильдері */
+        .card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(245, 222, 179, 0.9));
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Карточканың ішкі жылтыр эффектісі */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+            opacity: 0;
+        }
+
+        .card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.4);
+            border-color: #FFD700;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #8B4513;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: rotateY(360deg) scale(1.2);
+            color: #FFD700;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c1810;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: #8B4513;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer стильдері */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            color: #F5DEB3;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #F5DEB3;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+        }
+
+        .footer-link:hover {
+            color: #FFD700;
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+
+        /* Адаптивтілік - планшет үшін */
+        @media (max-width: 768px) {
+            .site-title {
+                font-size: 2.5rem;
+            }
+            
+            .site-motto {
+                font-size: 1.1rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                max-width: 500px;
+            }
+            
+            .card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .hero-section {
+                background-attachment: scroll;
+                min-height: 70vh;
+            }
+        }
+
+        /* Адаптивтілік - телефон үшін */
+        @media (max-width: 480px) {
+            .site-title {
+                font-size: 2rem;
+            }
+            
+            .site-motto {
+                font-size: 1rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .card-icon {
+                font-size: 3rem;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-section {
+                min-height: 60vh;
+                padding: 1rem;
+            }
+        }
+
+        /* Кіру анимациясы */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header бөлімі -->
+    <header class="header">
+        <h1 class="site-title">🏺 Қыпшақ шежіресі</h1>
+        <p class="site-motto">Тарихыңды таны, тегіңді біл</p>
+    </header>
+
+    <!-- Негізгі фон және карточкалар бөлімі -->
+<!-- Негізгі фон және карточкалар бөлімі -->
+<main class="hero-section">
+    <div class="cards-container">
+        <!-- Қыпшақ тарихы карточкасы -->
+        <a href="qypshaq-tarihy.html" class="card fade-in">
+            <div class="card-icon">🏛️</div>
+            <h2 class="card-title">Қыпшақ тарихы</h2>
+            <p class="card-description">Ұлы қыпшақ халқының тарихы мен мәдениеті туралы толық ақпарат</p>
+        </a>
+
+        <!-- Ру шежіресі карточкасы -->
+        <a href="shezhire.html" class="card fade-in">
+            <div class="card-icon">🌳</div>
+            <h2 class="card-title">Ру шежіресі</h2>
+            <p class="card-description">Қыпшақ руларының толық шежіресі мен олардың тарихи деректері</p>
+        </a>
+
+        <!-- Менің жеті атам карточкасы -->
+        <a href="zhetyata.html" class="card fade-in">
+            <div class="card-icon">👥</div>
+            <h2 class="card-title">Менің жеті атам</h2>
+            <p class="card-description">Өзіңіздің жеті ата шежіреңізді құрыңыз және сақтаңыз</p>
+        </a>
+
+        <!-- Жоба авторы карточкасы -->
+        <a href="avtor.html" class="card fade-in">
+            <div class="card-icon">👨‍💻</div>
+            <h2 class="card-title">Жоба авторы</h2>
+            <p class="card-description">Жоба туралы ақпарат және авторға хабарласу</p>
+        </a>
+    </div>
+</main>
+
+
+    <!-- Footer бөлімі -->
+    <footer class="footer">
+    </footer>
+
+    <script>
+        // JavaScript кодтары - анимация және навигация үшін
+        
+        // Бетке кіру кезіндегі анимация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Барлық карточкаларға fade-in класын қосу
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('fade-in');
+                }, index * 100);
+            });
+
+            // Жылжымалы мәзір эффектісі
+            addScrollEffect();
+        });
+
+        
+
+        // Скролл кезіндегі header эффектісі
+        function addScrollEffect() {
+            const header = document.querySelector('.header');
+            let lastScrollTop = 0;
+
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    // Төмен скролл - header-ды жасыру
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    // Жоғары скролл немесе беттің басы - header-ды көрсету
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+
+            // Header-ға transition қосу
+            header.style.transition = 'transform 0.3s ease-in-out';
+        }
+
+        // Карточкалардың hover эффектісін күшейту
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                // Hover кезіндегі дыбыстық эффект (опционал)
+                this.style.boxShadow = '0 25px 60px rgba(255, 215, 0, 0.5)';
+            });
+
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            });
+
+            // Тач құрылғылары үшін
+            card.addEventListener('touchstart', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            card.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-15px) scale(1.05)';
+                }, 100);
+            });
+        });
+
+        // Responsive фон эффектісі
+        function updateBackgroundForDevice() {
+            const heroSection = document.querySelector('.hero-section');
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                heroSection.style.backgroundAttachment = 'scroll';
+            } else {
+                heroSection.style.backgroundAttachment = 'fixed';
+            }
+        }
+
+        // Терезе өлшемі өзгергенде
+        window.addEventListener('resize', updateBackgroundForDevice);
+        
+        // Бастапқы жүктеу
+        updateBackgroundForDevice();
+
+        // Клавиатуралық навигация қолдауы
+        document.addEventListener('keydown', function(e) {
+            const cards = document.querySelectorAll('.card');
+            const focusedCard = document.activeElement;
+            
+            // Enter немесе Space басылғанда
+            if ((e.key === 'Enter' || e.key === ' ') && focusedCard.classList.contains('card')) {
+                e.preventDefault();
+                focusedCard.click();
+            }
+        });
+
+        // Карточкаларды фокустауға болатын етіп жасау
+        document.querySelectorAll('.card').forEach((card, index) => {
+            card.setAttribute('tabindex', index + 1);
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', card.querySelector('.card-title').textContent);
+        });
+    </script>
+</body>
+</html>
